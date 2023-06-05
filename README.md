@@ -100,7 +100,7 @@ We are going to browse the files with windows file explorer, then will assign .c
 
 
 # Help
-This is a personal project, that has been tested very little time, it will work, or maybe not, however I can assure it will not break window 🤣🤣😂.
+This is a personal project, that has been tested very little time, it will work, or maybe not, however I can assure it will not break windows 🤣🤣😂.
 You can try it without any issues, it should work just fine.
 
 Good luck ;)
