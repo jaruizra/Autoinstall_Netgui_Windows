@@ -4,8 +4,7 @@ if not "%1"=="am_admin" (
     exit /b
 )
 
-DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Windows-Subsystem-Linux
-DISM /Online /Enable-Feature /All /FeatureName:VirtualMachinePlatform
-
+DISM /Online /Enable-Feature /All /FeatureName:Microsoft-Windows-Subsystem-Linux /norestart
+DISM /Online /Enable-Feature /All /FeatureName:VirtualMachinePlatform 
 
 pause
