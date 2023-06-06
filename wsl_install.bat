@@ -4,6 +4,8 @@ if not "%1"=="am_admin" (
     exit /b
 )
 
+wsl --update
+wsl --set-default-version 2
 wsl --install
 
 
