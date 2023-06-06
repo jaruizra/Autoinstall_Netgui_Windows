@@ -23,7 +23,7 @@ This uses windows WSL2(windows subsystem for Linux), this is like a virtual mach
         
         (To run a .bat file just double click on it.)
 
-        ¡RESTART THE SYSTEM!
+      ¡NOTE! -> It will ask for yes or no, type "y", the system will restart
 
 3.	Run the wsl_install.bat file, it will ask also for privilege access, it will install ubuntu and the wsl, it will take some time:
         
