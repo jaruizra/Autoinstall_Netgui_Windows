@@ -10,6 +10,7 @@ echo "deb [signed-by=/usr/share/keyrings/lablinuxrepo-archive-keyring.gpg] http:
 | sudo tee /etc/apt/sources.list.d/lablinuxrepo.list; ^
 sudo apt update; ^
 sudo dpkg --add-architecture i386; ^
+sudo apt update; ^
 sudo apt-get install gnome-terminal -y; ^
 sudo apt-get install konsole -y; ^
 sudo apt-get install xterm -y; ^
