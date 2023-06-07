@@ -36,6 +36,14 @@ This uses windows WSL2(windows subsystem for Linux), this is like a virtual mach
 
 You should see a Linux terminal in the cmd terminal that is opened. If not restart the device and search for ubuntu, a terminal should open. You can close it.
 
+### If step 3 fails.
+ If the netgui_install.bat file fails to install Ubuntu and wsl, you will have to install it manually on the microsoft store, it should normally work, however there are cases (depends of the pc) that you cant install wsl with by comand line. No idea why, just install wsl and then Ubuntu.
+
+![Captura de pantalla 2023-06-07 232212](https://github.com/jaruizra/Autoinstall_Netgui_Windows/assets/121313957/95023249-13e0-45a3-a365-55766c9abec6)
+
+![Captura de pantalla 2023-06-07 232303](https://github.com/jaruizra/Autoinstall_Netgui_Windows/assets/121313957/881ce3ac-1dab-4e24-ac1c-b3d1e247877c)
+
+
 4.	Run the Netgui_install.bat, this will update your ubuntu install, then it will add the URJC EIF repository, it will then install netgui and Wireshark.
 
         Double-click the Netgui_install.bat file
