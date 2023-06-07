@@ -13,31 +13,27 @@ This uses windows WSL2(windows subsystem for Linux), this is like a virtual mach
 
 
 # How to install
-1.	Enable virtualization in the BIOS (it should be enabled by default) you can check many YouTube videos on how to do it. Here is a guide on how to do this
+1.	Enable virtualization in the BIOS (it should be enabled by default) you can check many YouTube videos on how to do it. Here is a guide on how to do this:
   
         https://support.bluestacks.com/hc/en-us/articles/360058102252-How-to-enable-Virtualization-VT-on-Windows-10-for-BlueStacks-5
   
 2.	Run the **vm_enable.bat** file, it will ask for privilege access, it needs those for install the Windows subsystem for Linux and Virtual Machine Platform characteristics.
          
-        Double-click the vm_enable.bat file
-        
-        (To run a .bat file just double click on it.)
+        Double-click the vm_enable.bat file 		(To run a .bat file just double click on it.)
 
       ¡NOTE! -> It will ask for yes or no, type "y", the system will restart
 
 3.	Run the wsl_install.bat file, it will ask also for privilege access, it will install ubuntu and the wsl, it will take some time:
         
-        Double-click the wsl_install.bat file
+        Double-click the wsl_install.bat file 		(To run a .bat file just double click on it.)
         
-        (To run a .bat file just double click on it.)
-
 - It will ask for a username.
 - It will ask for a password.
 
 You should see a Linux terminal in the cmd terminal that is opened. If not restart the device and search for ubuntu, a terminal should open. You can close it.
 
 ### If step 3 fails.
- If the netgui_install.bat file fails to install Ubuntu and wsl, you will have to install it manually on the microsoft store, it should normally work, however there are cases (depends of the pc) that you cant install wsl with by comand line. No idea why, just install wsl and then Ubuntu.
+ If the netgui_install.bat file fails to install Ubuntu and wsl, you will have to install it manually on the Microsoft Store, it should normally work, however there are cases (depends of the pc) that you can’t install wsl with by command line. No idea why, just install wsl and then Ubuntu.
 
 ![Captura de pantalla 2023-06-07 232212](https://github.com/jaruizra/Autoinstall_Netgui_Windows/assets/121313957/95023249-13e0-45a3-a365-55766c9abec6)
 
@@ -46,13 +42,13 @@ You should see a Linux terminal in the cmd terminal that is opened. If not resta
 
 4.	Run the Netgui_install.bat, this will update your ubuntu install, then it will add the URJC EIF repository, it will then install netgui and Wireshark.
 
-        Double-click the Netgui_install.bat file
+        Double-click the Netgui_install.bat file 		(To run a .bat file just double click on it.)
         
-        (To run a .bat file just double click on it.)
+        It will ask for your Ubuntu created password, type it and wait...
         
-        it will ask for your Ubuntu created password, type it and wait...
-        
-        (if it ask for something select always yes)
+        If it asks for something select always yes!
+
+This .bat file sends the necessary commands to the Ubuntu terminal within windows cmd, wsl has features that enable you to do this.
 
 
 # How to use netgui 
@@ -66,7 +62,7 @@ You should see a Linux terminal in the cmd terminal that is opened. If not resta
 3.	You can check the files of Ubuntu from windows, you will see there is a new mounted drive called Linux on your windows file explorer. Just open it and get access to all ubuntu files.
 4.	![Captura de pantalla 2023-06-05 212756](https://github.com/jaruizra/Autoinstall_Netgui_Windows/assets/121313957/95637858-1955-4fc9-9a1e-6aba7b267a09)
           
-       You can create a file inside Ubuntu/home/"YOUR_USERNAME" called CodeUbuntu where you can save your files, you can pin it to favorites  so you can access it more easily.
+       You can create a file inside Ubuntu/home/"YOUR_USERNAME" called CodeUbuntu where you can save your files, you can pin it to favorites so you can access it more easily.
        
 6.	You can type on the terminal “netgui.sh” to open the netgui app, it should work as usual.
 
@@ -96,7 +92,7 @@ We are going to browse the files with windows file explorer, then will assign .c
           
           This will work: \\wsl.localhost\Ubuntu-22.04
           This will work: C:\Users\javie\Downloads
-          This will not work: D:\OneDrive - Universidad Rey Juan Carlos\Escritorio   (ckeck the spaces in the "Universidad rey...")
+          This will not work: D:\OneDrive - Universidad Rey Juan Carlos\Escritorio   (check the spaces in the "Universidad rey...")
           
 3.	Safe the wireshark_ubuntu.bat file on a safe place, like the documents folder.
 4.	Open on windows 11 default apps, and up in the search by type of document type: “.cap”. Select the first option and click on “Select another app from my pc”, then search for the wireshark_ubuntu.bat file on your documents folder. Each time you open a .cap file (tcdump output file) it will open Linux Wireshark. It should work flawlessly.
