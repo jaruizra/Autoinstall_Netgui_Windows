@@ -5,5 +5,9 @@ if not "%1"=="am_admin" (
 )
 
 wsl --install
+wsl --set-default-version 2
+wsl --update
+wsl --shutdown
+wsl --install -d ubuntu
 
 pause
