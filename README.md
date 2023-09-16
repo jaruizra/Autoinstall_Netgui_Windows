@@ -16,7 +16,9 @@ This uses windows WSL2(windows subsystem for Linux), this is like a virtual mach
 1.	Enable virtualization in the BIOS (it should be enabled by default) you can check many YouTube videos on how to do it. Here is a guide on how to do this:
   
         https://support.bluestacks.com/hc/en-us/articles/360058102252-How-to-enable-Virtualization-VT-on-Windows-10-for-BlueStacks-5
-  
+
+*Now Download All_Files from the realeasses*
+
 2.	Run the **vm_enable.bat** file, it will ask for privilege access, it needs those for install the Windows subsystem for Linux and Virtual Machine Platform characteristics.
          
         Double-click the vm_enable.bat file 		(To run a .bat file just double click on it.)
