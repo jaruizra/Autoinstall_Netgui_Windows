@@ -17,7 +17,7 @@ This uses windows WSL2(windows subsystem for Linux), this is like a virtual mach
   
         https://support.bluestacks.com/hc/en-us/articles/360058102252-How-to-enable-Virtualization-VT-on-Windows-10-for-BlueStacks-5
 
-*Now Download All_Files from the realeasses*
+*Now Download All_Files from realeases*
 
 2.	Run the **vm_enable.bat** file, it will ask for privilege access, it needs those for install the Windows subsystem for Linux and Virtual Machine Platform characteristics.
          
@@ -42,9 +42,9 @@ You should see a Linux terminal in the cmd terminal that is opened. If not resta
 ![Captura de pantalla 2023-06-07 232303](https://github.com/jaruizra/Autoinstall_Netgui_Windows/assets/121313957/881ce3ac-1dab-4e24-ac1c-b3d1e247877c)
 
 
-4.	Run the Netgui_install.bat, this will update your ubuntu install, then it will add the URJC EIF repository, it will then install netgui and Wireshark.
+4.	Run the apps_intall.bat, this will update your ubuntu install, then it will add the URJC EIF repository, it will then install netgui, rars and Wireshark.
 
-        Double-click the Netgui_install.bat file 		(To run a .bat file just double click on it.)
+        Double-click the apps_intall.bat file 		(To run a .bat file just double click on it.)
         
         It will ask for your Ubuntu created password, type it and wait...
         
