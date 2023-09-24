@@ -16,7 +16,7 @@ sudo apt-get install konsole -y; ^
 sudo apt-get install xterm -y; ^
 sudo apt-get install xwit -y; ^
 sudo apt-get install telnetd -y; ^
-sudo apt-get install netgui -y
-
+sudo apt-get install netgui -y; ^
+sudo apt-get install rars
 
 pause
