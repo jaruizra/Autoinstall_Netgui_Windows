@@ -15,13 +15,16 @@ if not exist "%file%" (
     type nul > "%file%"
 )
 
-set "content=[wsl2]
-swap=32GB
-
-[boot]
-systemd=True
-"
-powershell -Command "Add-Content -Path '%file%' -Value '%content%' -NoNewline"
+echo .>> "%UserProfile%\%file%"
+echo "[wsl2]" >> "%UserProfile%\%file%"
+echo .>> "%UserProfile%\%file%"
+echo "swap=32GB" >> "%UserProfile%\%file%"
+echo .>> "%UserProfile%\%file%"
+echo .>> "%UserProfile%\%file%"
+echo "[boot]"" >> "%UserProfile%\%file%"
+echo .>> "%UserProfile%\%file%"
+echo "systemd=True" >> "%UserProfile%\%file%"
+echo .>> "%UserProfile%\%file%"
 
 wsl --install -d ubuntu
 
