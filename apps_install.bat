@@ -18,9 +18,6 @@ echo "deb [signed-by=/usr/share/keyrings/lablinuxrepo-archive-keyring.gpg] http:
 sudo apt update; ^
 sudo apt-get install gnome-terminal -y; ^
 sudo apt-get install konsole -y; ^
-sudo apt-get install xterm -y; ^
-sudo apt-get install xwit -y; ^
-sudo apt-get install telnetd -y; ^
 sudo apt-get install netgui -y; ^
 sudo apt-get install rars
 
