@@ -128,34 +128,56 @@ shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 # Shell is bash
 if [ $shell = "bash" ]
 then
-    echo "# ROS 2 underlay." >> ~/.bashrc
-    echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-    if [ $? -ne 0 ]
+    # Check if its already sourced
+    grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
+    if [ $? -eq 0 ]
     then
-        echo "Failed to add source to bashrc"
-        exit 1
+        echo "ROS 2 already sourced in bashrc"
+    else
+        echo "# ROS 2 underlay." >> ~/.bashrc
+        echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+        if [ $? -ne 0 ]
+        then
+            echo "Failed to add source to bashrc"
+            exit 1
+        fi
     fi
 
 # Shell is zsh
 elif [ $shell = "zsh" ]
 then
-    echo "# ROS 2 underlay." >> ~/.zshrc
-    echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
-    if [ $? -ne 0 ]
+    # Check if its already sourced
+    grep -q "/opt/ros/humble/setup.zshrc" ~/.zshrc
+    if [ $? -eq 0 ]
     then
-        echo "Failed to add source to zshrc"
-        exit 1
+        echo "ROS 2 already sourced in zshrc"
+    else
+        echo "# ROS 2 underlay." >> ~/.zshrc
+        echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
+        if [ $? -ne 0 ]
+        then
+            echo "Failed to add source to zshrc"
+            exit 1
+        fi
     fi
 
 # Shell is sh
 elif [ $shell = "sh" ]
 then
-    echo "# ROS 2 underlay." >> ~/.profile
-    echo "source /opt/ros/humble/setup.sh" >> ~/.profile
-    if [ $? -ne 0 ]
+    # Check if its already sourced
+    grep -q "/opt/ros/humble/setup.sh" ~/.profile
+    if [ $? -eq 0 ]
     then
-        echo "Failed to add source to profile"
-        exit 1
+        echo "ROS 2 already sourced in bashrc"
+    else
+
+        echo "# ROS 2 underlay." >> ~/.profile
+        echo "source /opt/ros/humble/setup.sh" >> ~/.profile
+        if [ $? -ne 0 ]
+        then
+            echo "Failed to add source to profile"
+            exit 1
+        fi
     fi
 
 # Shell not supported by ROS 2
