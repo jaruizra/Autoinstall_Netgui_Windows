@@ -142,6 +142,8 @@ then
             exit 1
         fi
     fi
+    source /opt/ros/humble/setup.bash
+
 
 # Shell is zsh
 elif [ $shell = "zsh" ]
@@ -185,12 +187,3 @@ else
     echo "Shell not supported"
     exit 1
 fi
-
-
-############################################################################################################
-
-# Now we install --- Kobuki from the Intelligent Robotics Lab using ROS ---
-
-ros2 run demo_nodes_cpp talker
-
-
