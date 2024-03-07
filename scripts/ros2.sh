@@ -120,13 +120,13 @@ fi
 
 echo
 echo "Installation succesful. \n"
-echo
+
 
 # Sourcing the setup script
 shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 
 # Shell is bash
-if [ $shell = "bash" ]
+if [ "$shell" = "bash" ]
 then
     # Check if its already sourced
     grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
@@ -185,5 +185,12 @@ else
     echo "Shell not supported"
     exit 1
 fi
+
+
+############################################################################################################
+
+# Now we install --- Kobuki from the Intelligent Robotics Lab using ROS ---
+
+ros2 run demo_nodes_cpp talker
 
 
