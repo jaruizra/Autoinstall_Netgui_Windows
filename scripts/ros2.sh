@@ -23,6 +23,7 @@ else
         exit 1
     fi
 
+    # tengo que ver como arreglar esto
     export LANG=en_US.UTF-8
     if [ $? -ne 0 ]
     then
@@ -134,12 +135,7 @@ then
         echo "Failed to add source to bashrc"
         exit 1
     fi
-    source ~/.bashrc
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to source bashrc"
-        exit 1
-    fi
+
 # Shell is zsh
 elif [ $shell = "zsh" ]
 then
@@ -150,12 +146,7 @@ then
         echo "Failed to add source to zshrc"
         exit 1
     fi
-    source ~/.zshrc
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to source zshrc"
-        exit 1
-    fi
+
 # Shell is sh
 elif [ $shell = "sh" ]
 then
@@ -166,12 +157,7 @@ then
         echo "Failed to add source to profile"
         exit 1
     fi
-    source ~/.profile
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to source profile"
-        exit 1
-    fi
+
 # Shell not supported by ROS 2
 else
     echo "Shell not supported"
