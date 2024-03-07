@@ -1,30 +1,21 @@
-#!/bin/bash
+#!/bin/sh
 
-set -eu -o pipefail # fail on error and report it, debug all lines
+echo $patatacaliente
 
-sudo -n true
-test $? -eq 0 || exit 1 "you should have sudo privilege to run this script"
+# Check if its already sourced
+grep -q "patatacaliente" ~/.bashrc
+if [ $? -eq 0 ]
+then
+    echo "patatacaliente already sourced in bashrc"
+else
+    echo "# patatacaliente underlay." >> ~/.bashrc
+    echo "export patatacalienteh=67" >> ~/.bashrc
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to add source to bashrc"
+        exit 1
+    fi
+fi
+source /opt/ros/humble/setup.bash
 
-echo installing the must-have pre-requisites
-while read -r p ; do sudo apt-get install -y $p ; done < <(cat << "EOF"
-    perl
-    zip unzip
-    exuberant-ctags
-    mutt
-    libxml-atom-perl
-    postgresql-9.6
-    libdbd-pgsql
-    curl
-    wget
-    libwww-curl-perl
-EOF
-)
-
-echo installing the nice-to-have pre-requisites
-echo you have 5 seconds to proceed ...
-echo or
-echo hit Ctrl+C to quit
-echo -e "\n"
-sleep 6
-
-sudo apt-get install -y tig
+echo $patatacaliente
