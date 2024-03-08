@@ -3,7 +3,7 @@ import os
 import time
 
 def run_script(script_path):
-    result = subprocess.run(["/bin/sh", script_path])
+    result = subprocess.run([script_path])
     return result
 
 def get_option2(text):
@@ -87,10 +87,18 @@ def main():
                 print("")
                 print("Installing ros2 ... ")
                 print("")
-                cmd_exit = run_script("./scripts/install_ros2.sh")
-
+                script_exit = run_script("./scripts/install_ros2.sh")
                 print("")
                 print("Finished installing ros2.")
+                print("")
+
+            elif option2 == 2:
+                print("")
+                print("Installing kobuki ... ")
+                print("")
+                script_exit = run_script("./scripts/explain.sh")
+                print("")
+                print("Finished installing kobuki.")
                 print("")
 
 

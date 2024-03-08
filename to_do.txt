@@ -1,0 +1,5 @@
+sistema de log
+    1. abrir un .sh nueva encabezado en el log del dia -> crear si es necesario
+    2. si lleva mas de 10000 lineas crea otro -> fecha_numero
+    3. mete todo ahí
+    4. mete si sale con exito o no

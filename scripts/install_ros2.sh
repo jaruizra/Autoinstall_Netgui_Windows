@@ -24,7 +24,8 @@ else
     fi
 
     # tengo que ver como arreglar esto
-    export LANG=en_US.UTF-8
+    export LANG=en_US.UTF-8    
+
     if [ $? -ne 0 ]
     then
         echo "Failed to export LANG"
@@ -54,16 +55,16 @@ else
 fi
 
 # Update
-sudo apt update
+sudo apt update > /dev/null 2>&1
 
 # Add ros2 repository
-sudo apt install -y software-properties-common
+sudo apt install -y software-properties-common > /dev/null 
 if [ $? -ne 0 ]
 then
     echo "Failed to install software-properties-common"
     exit 1
 fi
-sudo add-apt-repository -y universe
+sudo add-apt-repository -y universe > /dev/null
 if [ $? -ne 0 ]
 then
     echo "Failed to add universe repository"
@@ -72,14 +73,14 @@ fi
 echo "Ubuntu Universe repository is enabled."
 
 # Add ROS 2 GPG key with apt.
-sudo apt update && sudo apt install curl -y
+sudo apt update && sudo apt install curl -y > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to install curl"
     exit 1
 fi
 
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg > /dev/null
 if [ $? -ne 0 ]
 then
     echo "Failed to add ROS 2 GPG key"
@@ -128,12 +129,32 @@ shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 # Shell is bash
 if [ "$shell" = "bash" ]
 then
+
+
+
+
+    export pollo=pepe
+    echo "# Change language to UTF-8." >> ~/.bashrc
+    echo "export pollo=pepe" >> ~/.bashrc
+
+
+
+
+
+
+
+
+    echo "" >> ~/.bashrc
+    echo "# Change language to UTF-8." >> ~/.bashrc
+    echo "export LANG=en_US.UTF-8" >> ~/.bashrc
+
     # Check if its already sourced
     grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
     if [ $? -eq 0 ]
     then
         echo "ROS 2 already sourced in bashrc"
     else
+        echo "" >> ~/.bashrc
         echo "# ROS 2 underlay." >> ~/.bashrc
         echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
         if [ $? -ne 0 ]
@@ -142,18 +163,24 @@ then
             exit 1
         fi
     fi
-    source /opt/ros/humble/setup.bash
+    # source /opt/ros/humble/setup.bash
 
 
 # Shell is zsh
 elif [ $shell = "zsh" ]
 then
+
+    echo "" >> ~/.zshrc
+    echo "# Change language to UTF-8." >> ~/.zshrc
+    echo "export LANG=en_US.UTF-8" >> ~/.zshrc
+
     # Check if its already sourced
     grep -q "/opt/ros/humble/setup.zshrc" ~/.zshrc
     if [ $? -eq 0 ]
     then
         echo "ROS 2 already sourced in zshrc"
     else
+        echo "" >> ~/.zshrc
         echo "# ROS 2 underlay." >> ~/.zshrc
         echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
         if [ $? -ne 0 ]
@@ -166,13 +193,18 @@ then
 # Shell is sh
 elif [ $shell = "sh" ]
 then
+
+    echo "" >> ~/.profile
+    echo "# Change language to UTF-8." >> ~/.profile
+    echo "export LANG=en_US.UTF-8" >> ~/.profile
+
     # Check if its already sourced
     grep -q "/opt/ros/humble/setup.sh" ~/.profile
     if [ $? -eq 0 ]
     then
         echo "ROS 2 already sourced in bashrc"
     else
-
+        echo "" >> ~/.profile
         echo "# ROS 2 underlay." >> ~/.profile
         echo "source /opt/ros/humble/setup.sh" >> ~/.profile
         if [ $? -ne 0 ]

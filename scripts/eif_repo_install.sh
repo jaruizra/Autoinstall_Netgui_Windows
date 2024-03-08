@@ -4,7 +4,7 @@
 if [ -f /etc/apt/sources.list.d/lablinuxrepo.list ]
 then
     echo "Eif repo already installed"
-    # exit 0
+    exit 0
 fi
 
 # Check for sudo privileges, dischard output
@@ -32,7 +32,7 @@ then
 fi
 
 # Add GPT key eif repo
-wget -qO - https://labs.eif.urjc.es/repo/lablinuxrepo.asc | gpg --dearmor | sudo tee /usr/share/keyrings/lablinuxrepo-archive-keyring.gpg
+wget -qO - https://labs.eif.urjc.es/repo/lablinuxrepo.asc | gpg --dearmor | sudo tee /usr/share/keyrings/lablinuxrepo-archive-keyring.gpg  > /dev/null
 
 if [ $? -ne 0 ]
 then
@@ -41,7 +41,7 @@ then
 fi
 
 # Add eif repo
-echo "deb [signed-by=/usr/share/keyrings/lablinuxrepo-archive-keyring.gpg] http://labs.eif.urjc.es/repo/ `lsb_release -c -s` main" | sudo tee /etc/apt/sources.list.d/lablinuxrepo.list
+echo "deb [signed-by=/usr/share/keyrings/lablinuxrepo-archive-keyring.gpg] http://labs.eif.urjc.es/repo/ `lsb_release -c -s` main" | sudo tee /etc/apt/sources.list.d/lablinuxrepo.list > /dev/null
 if [ $? -ne 0 ]
 then
     echo "Failed to add eif repo to sources list."
