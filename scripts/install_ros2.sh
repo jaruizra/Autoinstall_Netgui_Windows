@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Ubuntu Shell is none interactive
+eval "$(cat ~/.bashrc | tail -n +10)"
+
+# Check number of arguments
+if [ $# -ne 0 ]
+then
+    echo "This script does not take any arguments."
+    exit 1
+fi
+
 locale=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
 
 # Check if it is set to UTF-8
@@ -58,13 +68,13 @@ fi
 sudo apt update > /dev/null 2>&1
 
 # Add ros2 repository
-sudo apt install -y software-properties-common > /dev/null 
+sudo apt install -y software-properties-common > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to install software-properties-common"
     exit 1
 fi
-sudo add-apt-repository -y universe > /dev/null
+sudo add-apt-repository -y universe > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to add universe repository"
@@ -80,7 +90,7 @@ then
     exit 1
 fi
 
-sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg > /dev/null
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to add ROS 2 GPG key"
@@ -88,7 +98,7 @@ then
 fi
 
 # Add the repository to your sources list.
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to add the repository to sources list."
@@ -96,10 +106,10 @@ then
 fi
 
 # Update apt repository
-sudo apt update
+sudo apt update > /dev/null 2>&1
 
 # Update Ubuntu packages for ROS 2 installation
-sudo apt upgrade -y
+sudo apt upgrade -y > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to upgrade"
@@ -111,7 +121,7 @@ echo "\n"
 echo "About to install ROS 2 Desktop... \n"
 
 # Install ROS 2 Desktop
-sudo apt install -y ros-humble-desktop
+sudo apt install -y ros-humble-desktop > /dev/null 2>&1
 
 if [ $? -ne 0 ]
 then

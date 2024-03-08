@@ -64,7 +64,7 @@ def main():
         
         else:
             print("")
-            print(" --- Good buy :), see you next time --- ")
+            print(" --- Good bye :), see you next time --- ")
             print("")
             exit = True
 
@@ -80,7 +80,7 @@ def main():
                 exit = True
                 print("")
                 print(" ---  User exited the program --- ")
-                print(" --- Good buy :), see you next time --- ")
+                print(" --- Good bye :), see you next time --- ")
                 print("")
 
             elif option2 == 1:
@@ -99,6 +99,15 @@ def main():
                 script_exit = run_script("./scripts/explain.sh")
                 print("")
                 print("Finished installing kobuki.")
+                print("")
+
+            elif option2 == 3:
+                print("")
+                print("Installing netgui ... ")
+                print("")
+                script_exit = run_script("./scripts/install_netgui.sh")
+                print("")
+                print("Finished installing netgui.")
                 print("")
 
 
@@ -139,7 +148,7 @@ def main():
     except KeyboardInterrupt:
         print("")
         print(" --- The user force the program exit --- ")
-        print(" --- Good buy :), see you next time --- ")
+        print(" --- Good bye :), see you next time --- ")
         print("")
         
 

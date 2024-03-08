@@ -1,5 +1,15 @@
 #!/bin/sh
 
+# Ubuntu Shell is none interactive
+eval "$(cat ~/.bashrc | tail -n +10)"
+
+# Check number of arguments
+if [ $# -ne 0 ]
+then
+    echo "This script does not take any arguments."
+    exit 1
+fi
+
 # Check if eif repo is already installed
 if [ -f /etc/apt/sources.list.d/lablinuxrepo.list ]
 then
