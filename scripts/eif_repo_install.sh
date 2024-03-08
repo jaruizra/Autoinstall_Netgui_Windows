@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | tail -n +10)"
+eval "$(cat ~/.bashrc | grep export)"
 
 # Check number of arguments
 if [ $# -ne 0 ]
