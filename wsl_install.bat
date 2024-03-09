@@ -26,14 +26,4 @@ echo [wsl2] >> "%file%"
 echo swap=32GB >> "%file%"
 echo. >> "%file%"
 
-REM Añade la configuración [boot] al archivo .wslconfig
-echo [boot] >> "%file%"
-echo systemd=True >> "%file%"
-echo. >> "%file%"
-
-REM Enable systemd on wsl2
-echo . >> %file%
-echo [boot] >> %file%
-echo systemd=True >> %file%
-
 pause

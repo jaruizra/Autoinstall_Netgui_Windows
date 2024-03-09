@@ -6,6 +6,12 @@ if not "%1"=="am_admin" (
     exit /b
 )
 
+
+REM Unable systemd in distro
+wsl -d kobuki sudo rm -rf /etc/wsl.conf; echo >> /tmp/wsl.conf; echo [boot] >> /tmp/wsl.conf; echo systemd=true >> /tmp/wsl.conf; sudo mv /tmp/wsl.conf /etc/wsl.conf
+
+wsl --shutdown
+
 REM Update, upgrade and install packages
 wsl -d kobuki sudo apt update; sudo apt upgrade -y; ^
 sudo dpkg --add-architecture i386; ^

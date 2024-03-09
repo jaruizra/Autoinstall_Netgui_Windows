@@ -3,6 +3,14 @@
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
+# Check if system is running Ubuntu
+if ! systemctl --version > /dev/null 2>&1
+then
+    echo "Systemd is not running Ubuntu."
+    echo "Need to enable systemd before installing kobuki."
+    exit 1
+fi
+
 # Check if ROS 2 humble is installed and activated
 if [ $(command -v ros2) ]
 then
