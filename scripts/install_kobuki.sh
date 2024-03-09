@@ -152,16 +152,33 @@ cd ~/ros2_ws
 if [ ! -f /etc/udev/rules.d/56-orbbec-usb.rules ]
 then
     sudo cp src/ThirdParty/ros_astra_camera/astra_camera/scripts/56-orbbec-usb.rules /etc/udev/rules.d/
+    if [ $? -ne 0 ]
+    then
+        echo
+        echo "Failed to install udev rules."
+        exit 1
+    fi
 fi
 
 if [ ! -f /etc/udev/rules.d/rplidar.rules ]
 then
     sudo cp src/ThirdParty/rplidar_ros/scripts/rplidar.rules /etc/udev/rules.d/
+    if [ $? -ne 0 ]
+    then
+        echo
+        echo "Failed to install udev rules."
+        exit 1
 fi
 
 if [ ! -f /etc/udev/rules.d/60-kobuki.rules ]
 then
     sudo cp src/ThirdParty/kobuki_ros/60-kobuki.rules /etc/udev/rules.d/
+    if [ $? -ne 0 ]
+    then
+        echo
+        echo "Failed to install udev rules."
+        exit 1
+    fi
 fi
 
 sudo udevadm control --reload-rules && sudo udevadm trigger
@@ -178,7 +195,12 @@ echo
 echo "Moving xtion calibration ..."
 if [ ! -f ~/.ros/camera_info/rgb_PS1080_PrimeSense.yaml ]
 then
-    cp ~/ros2_ws/src/ThirdParty/openni2_camera/openni2_camera/rgb_PS1080_PrimeSense.yaml ~/.ros/camera_info
+    sudo cp ~/ros2_ws/src/ThirdParty/openni2_camera/openni2_camera/rgb_PS1080_PrimeSense.yaml ~/.ros/camera_info
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to move xtion calibration."
+        exit 1
+    fi
 fi
 echo "Successfull move of xtion calibration."
 
@@ -189,6 +211,12 @@ echo "About to build ros2_ws project ... "
 if [ -f /etc/ros/rosdep/sources.list.d/20-default.list ]
 then
     sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to remove /etc/ros/rosdep/sources.list.d/20-default.list"
+        echo "Aborting building proyect."
+        exit 1
+    fi
 fi
 echo
 echo "sudo rosdep init"

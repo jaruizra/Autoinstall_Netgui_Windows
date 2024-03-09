@@ -8,7 +8,7 @@ if not "%1"=="am_admin" (
 
 
 REM Unable systemd in distro
-wsl -d kobuki sudo rm -rf /etc/wsl.conf; echo >> /tmp/wsl.conf; echo [boot] >> /tmp/wsl.conf; echo systemd=true >> /tmp/wsl.conf; sudo mv /tmp/wsl.conf /etc/wsl.conf
+wsl -d kobuki sudo rm -rf /etc/wsl.conf; echo > /tmp/wsl.conf; echo [boot] >> /tmp/wsl.conf; echo systemd=true >> /tmp/wsl.conf; sudo mv /tmp/wsl.conf /etc/wsl.conf
 
 wsl --shutdown
 
