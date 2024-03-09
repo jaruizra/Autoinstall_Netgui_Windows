@@ -114,7 +114,7 @@ def main():
             if script_exit == 0:
                 print("")
                 print("Installation finished successfully.")
-            else
+            else:
                 print("")
                 print("Installation failed.")
 

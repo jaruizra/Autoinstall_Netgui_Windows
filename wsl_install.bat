@@ -31,4 +31,9 @@ echo [boot] >> "%file%"
 echo systemd=True >> "%file%"
 echo. >> "%file%"
 
+REM Enable systemd on wsl2
+echo . >> %file%
+echo [boot] >> %file%
+echo systemd=True >> %file%
+
 pause
