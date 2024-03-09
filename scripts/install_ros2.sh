@@ -140,20 +140,6 @@ shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 if [ "$shell" = "bash" ]
 then
 
-
-
-
-    export pollo=pepe
-    echo "# Change language to UTF-8." >> ~/.bashrc
-    echo "export pollo=pepe" >> ~/.bashrc
-
-
-
-
-
-
-
-
     echo "" >> ~/.bashrc
     echo "# Change language to UTF-8." >> ~/.bashrc
     echo "export LANG=en_US.UTF-8" >> ~/.bashrc

@@ -7,7 +7,7 @@ if not "%1"=="am_admin" (
 )
 
 REM Update, upgrade and install packages
-wsl -d Ubuntu sudo apt update; sudo apt upgrade -y; ^
+wsl -d test3 sudo apt update; sudo apt upgrade -y; ^
 sudo dpkg --add-architecture i386; ^
 sudo apt update; ^
 sudo apt upgrade -y; ^
