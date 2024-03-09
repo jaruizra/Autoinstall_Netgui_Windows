@@ -96,7 +96,8 @@ def main():
                 print("")
                 print("Installing kobuki ... ")
                 print("")
-                script_exit = run_script("./scripts/explain.sh")
+                script_exit = run_script("./scripts/install_kobuki.sh")
+
                 print("")
                 print("Finished installing kobuki.")
                 print("")
@@ -109,6 +110,13 @@ def main():
                 print("")
                 print("Finished installing netgui.")
                 print("")
+            
+            if script_exit == 0:
+                print("")
+                print("Installation finished successfully.")
+            else
+                print("")
+                print("Installation failed.")
 
 
 
