@@ -3,8 +3,6 @@
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
-echo $patata
-export patata=hola
-echo $patata
+sudo apt install gnome-terminal konsole -y
 
-echo $pollo
+gnome-terminal

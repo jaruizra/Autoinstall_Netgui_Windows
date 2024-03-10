@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"

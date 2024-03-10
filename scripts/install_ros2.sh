@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
@@ -8,6 +8,20 @@ if [ $# -ne 0 ]
 then
     echo "This script does not take any arguments."
     exit 1
+fi
+
+# Check for sudo privileges, dischard output
+sudo -n true > /dev/null 2>&1
+
+# Check if sudo privileges were granted
+if [ $? -eq 0 ];
+then 
+    echo "You have sudo privileges"
+
+else
+    echo "You dont have sudo privileges"
+    # Update sudo timestamp
+    sudo -v
 fi
 
 # Update
@@ -191,4 +205,5 @@ then
         fi
     fi
 fi
-. /opt/ros/humble/setup.bash
+
+source /opt/ros/humble/setup.bash
