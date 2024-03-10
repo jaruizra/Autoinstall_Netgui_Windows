@@ -256,6 +256,30 @@ echo "About to start colcol build ... "
 echo "Installing in safe mode with --parallel-workers 1 to prevent crashes on low-specs machines."
 echo "Going to take some time, be patient. Grab a coffe."
 
+# Update
+sudo apt update > /dev/null 2>&1
+
+# Packages to install
+packages="gnome-terminal konsole netgui"
+
+# Install packages
+for p in $packages
+do
+    if dpkg -l | grep -q "$p";
+    then
+        echo "Package $p already installed"
+    else
+        sudo apt install -y $p > /dev/null 2>&1
+
+        # Check if package was installed succesfully
+        if [ $? -ne 0 ];
+        then
+            echo "Package $p failed to install"
+            exit 1
+        fi
+    fi
+done
+
 echo 
 echo "Running again colcon build to check for errors..."
 # Run a command in a new terminal and write its exit status to a temp file
