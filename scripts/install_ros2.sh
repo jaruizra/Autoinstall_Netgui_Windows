@@ -190,4 +190,5 @@ then
             exit 1
         fi
     fi
-    . /opt/ros/humble/setup.bash
+fi
+. /opt/ros/humble/setup.bash
