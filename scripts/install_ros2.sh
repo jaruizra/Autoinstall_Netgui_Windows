@@ -48,10 +48,8 @@ do
     fi
 done
 
-gnome-terminal
-
 echo waiting user for command:
-wait
+read
 
 locale_var=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
 
