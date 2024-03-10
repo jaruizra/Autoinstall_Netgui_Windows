@@ -122,7 +122,7 @@ fi
 # Install libusb, libftdi & libuvc
 echo
 echo "Installing libusb, libftdi & libuvc ..."
-sudo apt install libusb-1.0-0-dev libftdi1-dev libuvc-dev > /dev/null 2>&1
+sudo apt install -y libusb-1.0-0-dev libftdi1-dev libuvc-dev
 if [ $? -ne 0 ]
 then
     echo "Failed to install libusb, libftdi & libuvc."
@@ -196,6 +196,10 @@ echo
 echo "Moving xtion calibration ..."
 if [ ! -f ~/.ros/camera_info/rgb_PS1080_PrimeSense.yaml ]
 then
+    if [ ! -d ~/.ros/camera_info ]
+    then
+        mkdir -p ~/.ros/camera_info
+    fi
     sudo cp ~/ros2_ws/src/ThirdParty/openni2_camera/openni2_camera/rgb_PS1080_PrimeSense.yaml ~/.ros/camera_info
     if [ $? -ne 0 ]
     then
