@@ -121,7 +121,7 @@ echo "\n"
 echo "About to install ROS 2 Desktop... \n"
 
 # Install ROS 2 Desktop
-sudo apt install -y ros-humble-desktop > /dev/null 2>&1
+sudo apt install -y ros-humble-desktop
 
 if [ $? -ne 0 ]
 then
