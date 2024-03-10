@@ -168,6 +168,7 @@ then
         echo
         echo "Failed to install udev rules."
         exit 1
+    fi
 fi
 
 if [ ! -f /etc/udev/rules.d/60-kobuki.rules ]
