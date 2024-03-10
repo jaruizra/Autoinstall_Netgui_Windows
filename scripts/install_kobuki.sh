@@ -225,7 +225,7 @@ then
 fi
 echo
 echo "sudo rosdep init"
-sudo rodep init
+sudo rosdep init
 if [ $? -ne 0 ]
 then
     echo "sudo rosdep init failed. Aborting building proyect."
