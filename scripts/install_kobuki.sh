@@ -138,7 +138,7 @@ echo "Installing udev rules from astra camera, kobuki and rplidar..."
 sudo -n true > /dev/null 2>&1
 
 # Check if sudo privileges were granted
-if [ $? -eq 0 ];
+if [ $? -eq 0 ]
 then 
     echo "You have sudo privileges"
 
