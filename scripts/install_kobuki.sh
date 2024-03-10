@@ -23,9 +23,9 @@ then
             # Check if ROS 2 humble is sourced
             if ! grep -q "source /opt/ros/humble/setup.bash" ~/.bashrc
             then
-                echo "ROS 2 humble is not sourced."
-                exit 1
-            else
+                echo "" >> ~/.bashrc
+                echo "# ROS 2 underlay." >> ~/.bashrc
+                echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
                 . /opt/ros/humble/setup.bash
                 if [ $? -ne 0 ]
                 then
@@ -245,11 +245,12 @@ rosdep update
 if [ $? -ne 0 ]
 then
     echo "sudo rosdep update failed. Aborting building proyect."
-    exit 1
+    rosdep update
 fi
 
 echo
 echo "rosdep install --from-paths src --ignore-src -r -y"
+cd ~/ros2_ws
 rosdep install --from-paths src --ignore-src -r -y
 if [ $? -ne 0 ]
 then
@@ -265,7 +266,7 @@ echo "Going to take some time, be patient. Grab a coffe."
 echo 
 echo "Running again colcon build to check for errors..."
 # Run a command in a new terminal and write its exit status to a temp file
-gnome-terminal -- bash -c 'echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
+gnome-terminal -- bash -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 
 # Wait for a while for the process to potentially start
 sleep 5
@@ -309,7 +310,7 @@ do
         echo
         echo "Colcon build has finished."
         sleep 2
-        kill -9 $pid
+        # kill -9 $pid
         break
     fi
 done
@@ -327,7 +328,7 @@ fi
 echo 
 echo "Running again colcon build to check for errors..."
 # Run a command in a new terminal and write its exit status to a temp file
-gnome-terminal -- bash -c 'echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
+gnome-terminal -- bash -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 
 # Wait for a while for the process to potentially start
 sleep 5
@@ -371,7 +372,7 @@ do
         echo
         echo "Colcon build has finished."
         sleep 2
-        kill -9 $pid
+        # kill -9 $pid
         break
     fi
 done
@@ -402,7 +403,7 @@ echo "colcon build finished successfully."
 echo
 echo "Setup Gazebo to find models - GAZEBO_MODEL_PATH and project path"
 # Testing if GAZEBO_MODEL_PATH is set
-source /usr/share/gazebo/setup.bash > /dev/null 2>&1
+. /usr/share/gazebo/setup.bash
 if [ $? -ne 0 ]
 then
     echo "Failed to source /usr/share/gazebo/setup.bash"
@@ -417,7 +418,7 @@ echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
 echo >> ~/.bashrc
 
 # Testing if ros2_ws project path is set
-source ~/ros2_ws/install/setup.bash > /dev/null 2>&1
+. ~/ros2_ws/install/setup.bash
 if [ $? -ne 0 ]
 then
     echo "Failed to source ~/ros2_ws/install/setup.bash"
