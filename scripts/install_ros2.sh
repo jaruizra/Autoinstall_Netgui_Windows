@@ -10,6 +10,30 @@ then
     exit 1
 fi
 
+# Update
+sudo apt update > /dev/null 2>&1
+
+# Packages to install
+packages="gnome-terminal konsole"
+
+# Install packages
+for p in $packages
+do
+    if dpkg -l | grep -q "$p";
+    then
+        echo "Package $p already installed"
+    else
+        sudo apt install -y $p > /dev/null 2>&1
+
+        # Check if package was installed succesfully
+        if [ $? -ne 0 ];
+        then
+            echo "Package $p failed to install"
+            exit 1
+        fi
+    fi
+done
+
 locale=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
 
 # Check if it is set to UTF-8
@@ -18,6 +42,13 @@ then
     echo "Locale is set to UTF-8"
 
 else
+    sudo apt update && sudo apt install locales
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to install locales"
+        exit 1
+    fi
+
     # Set locale to UTF-8
     sudo locale-gen en_US en_US.UTF-8 
     if [ $? -ne 0 ]
@@ -83,7 +114,7 @@ fi
 echo "Ubuntu Universe repository is enabled."
 
 # Add ROS 2 GPG key with apt.
-sudo apt update && sudo apt install curl -y > /dev/null 2>&1
+sudo apt update && sudo apt install -y curl > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to install curl"

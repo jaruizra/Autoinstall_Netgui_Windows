@@ -12,7 +12,7 @@ then
 fi
 
 # Check if ROS 2 humble is installed and activated
-if [ $(command -v ros2) ]
+if [ ! $(command -v ros2) ]
 then
     # Check if ROS2 is installed
     if [ -d /opt/ros ]
@@ -25,6 +25,13 @@ then
             then
                 echo "ROS 2 humble is not sourced."
                 exit 1
+            else
+                . /opt/ros/humble/setup.bash
+                if [ $? -ne 0 ]
+                then
+                    echo "Failed to source ROS 2 humble."
+                    exit 1
+                fi
             fi
         else
             echo "ROS 2 humble is not installed"
@@ -249,30 +256,6 @@ then
     echo "rosdep install --from-paths src --ignore-src -r - failed. Aborting building proyect."
     exit 1
 fi
-
-# Update
-sudo apt update > /dev/null 2>&1
-
-# Packages to install
-packages="gnome-terminal konsole netgui"
-
-# Install packages
-for p in $packages
-do
-    if dpkg -l | grep -q "$p";
-    then
-        echo "Package $p already installed"
-    else
-        sudo apt install -y $p > /dev/null 2>&1
-
-        # Check if package was installed succesfully
-        if [ $? -ne 0 ];
-        then
-            echo "Package $p failed to install"
-            exit 1
-        fi
-    fi
-done
 
 echo
 echo
