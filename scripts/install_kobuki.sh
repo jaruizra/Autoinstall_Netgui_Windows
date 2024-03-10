@@ -250,12 +250,6 @@ then
     exit 1
 fi
 
-echo
-echo
-echo "About to start colcol build ... "
-echo "Installing in safe mode with --parallel-workers 1 to prevent crashes on low-specs machines."
-echo "Going to take some time, be patient. Grab a coffe."
-
 # Update
 sudo apt update > /dev/null 2>&1
 
@@ -279,6 +273,12 @@ do
         fi
     fi
 done
+
+echo
+echo
+echo "About to start colcol build ... "
+echo "Installing in safe mode with --parallel-workers 1 to prevent crashes on low-specs machines."
+echo "Going to take some time, be patient. Grab a coffe."
 
 echo 
 echo "Running again colcon build to check for errors..."
