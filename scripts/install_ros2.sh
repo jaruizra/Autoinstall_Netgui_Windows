@@ -34,7 +34,7 @@ do
     fi
 done
 
-locale=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
+locale_var=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
 
 # Check if it is set to UTF-8
 if [ $? -eq 0 ]
@@ -77,7 +77,7 @@ else
         exit 1
     fi
 
-    locale=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
+    locale_var=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
     if [ $? -ne 0 ]
     then
         echo "Failed to set locale to UTF-8"
@@ -169,10 +169,10 @@ echo "Installation succesful. \n"
 
 
 # Sourcing the setup script
-shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
+my_shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 
 # Shell is bash
-if [ "$shell" = "bash" ]
+if [ "$my_shell" = "bash" ]
 then
 
     # Check if its already sourced
@@ -190,59 +190,4 @@ then
             exit 1
         fi
     fi
-    # source /opt/ros/humble/setup.bash
-
-
-# Shell is zsh
-elif [ $shell = "zsh" ]
-then
-
-    echo "" >> ~/.zshrc
-    echo "# Change language to UTF-8." >> ~/.zshrc
-    echo "export LANG=en_US.UTF-8" >> ~/.zshrc
-
-    # Check if its already sourced
-    grep -q "/opt/ros/humble/setup.zshrc" ~/.zshrc
-    if [ $? -eq 0 ]
-    then
-        echo "ROS 2 already sourced in zshrc"
-    else
-        echo "" >> ~/.zshrc
-        echo "# ROS 2 underlay." >> ~/.zshrc
-        echo "source /opt/ros/humble/setup.zsh" >> ~/.zshrc
-        if [ $? -ne 0 ]
-        then
-            echo "Failed to add source to zshrc"
-            exit 1
-        fi
-    fi
-
-# Shell is sh
-elif [ $shell = "sh" ]
-then
-
-    echo "" >> ~/.profile
-    echo "# Change language to UTF-8." >> ~/.profile
-    echo "export LANG=en_US.UTF-8" >> ~/.profile
-
-    # Check if its already sourced
-    grep -q "/opt/ros/humble/setup.sh" ~/.profile
-    if [ $? -eq 0 ]
-    then
-        echo "ROS 2 already sourced in bashrc"
-    else
-        echo "" >> ~/.profile
-        echo "# ROS 2 underlay." >> ~/.profile
-        echo "source /opt/ros/humble/setup.sh" >> ~/.profile
-        if [ $? -ne 0 ]
-        then
-            echo "Failed to add source to profile"
-            exit 1
-        fi
-    fi
-
-# Shell not supported by ROS 2
-else
-    echo "Shell not supported"
-    exit 1
-fi
+    . /opt/ros/humble/setup.bash
