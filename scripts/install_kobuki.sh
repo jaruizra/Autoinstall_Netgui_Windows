@@ -249,7 +249,7 @@ then
 fi
 
 echo
-echo "rosdep install --from-paths src --ignore-src -r -y"ç
+echo "rosdep install --from-paths src --ignore-src -r -y"
 rosdep install --from-paths src --ignore-src -r -y
 if [ $? -ne 0 ]
 then
@@ -260,13 +260,12 @@ fi
 echo
 echo
 echo "About to start colcol build ... "
-echo "Installing in safe mode with --parallel-workers 1 to prevent crashes on low-specs machines."
 echo "Going to take some time, be patient. Grab a coffe."
 
 echo 
 echo "Running again colcon build to check for errors..."
 # Run a command in a new terminal and write its exit status to a temp file
-gnome-terminal -- bash -c 'echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
+gnome-terminal -- bash -c 'echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 
 # Wait for a while for the process to potentially start
 sleep 5
@@ -288,10 +287,10 @@ while true
 do
     if [ ! -f /tmp/exitstatus ]
     then
-        if [ $(($(date +%s) - $start_time)) -gt 1200 ]
+        if [ $(($(date +%s) - $start_time)) -gt 1800 ]
         then
             echo
-            echo "The process has taken too long to finish. More than 20 minutes. Exiting ..."
+            echo "The process has taken too long to finish. More than 30 minutes. Exiting ..."
             kill -9 $pid
             exit 1
             
@@ -303,7 +302,7 @@ do
             exit 1
         else
             echo "colcon build is still running..."
-            sleep 10
+            sleep 15
         fi
         
     else

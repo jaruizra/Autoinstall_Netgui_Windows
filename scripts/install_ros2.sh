@@ -67,6 +67,10 @@ else
     # tengo que ver como arreglar esto
     export LANG=en_US.UTF-8    
 
+    echo "" >> ~/.bashrc
+    echo "# Change language to UTF-8." >> ~/.bashrc
+    echo "export LANG=en_US.UTF-8" >> ~/.bashrc
+
     if [ $? -ne 0 ]
     then
         echo "Failed to export LANG"
@@ -170,10 +174,6 @@ shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
 # Shell is bash
 if [ "$shell" = "bash" ]
 then
-
-    echo "" >> ~/.bashrc
-    echo "# Change language to UTF-8." >> ~/.bashrc
-    echo "export LANG=en_US.UTF-8" >> ~/.bashrc
 
     # Check if its already sourced
     grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
