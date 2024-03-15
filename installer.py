@@ -42,32 +42,8 @@ def main():
     print("--- Welcome to the installation script of EIF linux apps ---")
     print("------------------------------------------------------------")
     print("")
-
+    print("--- These are the available apps to install:")
     try:
-
-        option = get_option("--- First I need to install EIF repository")
-
-        if (option == "y" or option == ""):
-            
-            print("")
-            print("Installing eif repo ... ")
-            print("")
-
-            cmd_exit = run_script("./scripts/eif_repo_install.sh")
-
-            # print(f"Script exited with status {cmd_exit.returncode}")
-            print("")
-            print("Finished installing eif repo.")
-            print("")
-
-            print("--- Now you can select what to install ---")
-        
-        else:
-            print("")
-            print(" --- Good bye :), see you next time --- ")
-            print("")
-            exit = True
-
 
         exit = False
         while not exit:
@@ -155,10 +131,17 @@ def main():
         
     except KeyboardInterrupt:
         print("")
+        print("")
         print(" --- The user force the program exit --- ")
         print(" --- Good bye :), see you next time --- ")
         print("")
-        
+    
+    except EOFError:
+        print("")
+        print("")
+        print(" --- The user force the program exit --- ")
+        print(" --- Good bye :), see you next time --- ")
+        print("")     
 
 if __name__ == "__main__":
     main()

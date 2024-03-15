@@ -3,6 +3,19 @@
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
+
+# Check if eif repo is already installed
+if [ -f ./scripts/eif_repo_install.sh ]
+then
+    echo "Attempting to install eif repo..."
+    ./scripts/eif_repo_install.sh
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to install eif repo"
+        exit 1
+    fi
+fi
+
 # Check if system is running Ubuntu
 if ! systemctl --version > /dev/null 2>&1
 then
@@ -436,17 +449,18 @@ then
     exit 1
 fi
 
+echo >> ~/.bashrc
 echo "# seting up ros2_ws project path" >> ~/.bashrc
 echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 
 echo 
-echo "Trying to launch gazebo kobuki simulation ..."
+echo "Trying to launch gazebo kobuki simulation in a new terminal ..."
 echo "If gazebo fails to launch, try to load a new terminal and run ros2 launch kobuki simulation.launch.py again."
 echo "If it also fails try to re-run the script or manyally installing from scratch kobuki."
 echo "You can follow all steps from https://github.com/IntelligentRoboticsLabs/kobuki"
 echo 
 
 # Try to launch gazebo kobuki simulation
-ros2 launch kobuki simulation.launch.py
+gnome-terminal -- bash -c 'source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; ros2 launch kobuki simulation.launch.py echo ; echo FINISHED, type enter to exit: ; read;'
 
 exit 0

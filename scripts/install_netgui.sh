@@ -3,6 +3,18 @@
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
+# Check if eif repo is already installed
+if [ -f ./scripts/eif_repo_install.sh ]
+then
+    echo "Attempting to install eif repo..."
+    ./scripts/eif_repo_install.sh
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to install eif repo"
+        exit 1
+    fi
+fi
+
 # Check number of arguments
 if [ $# -ne 0 ]
 then
