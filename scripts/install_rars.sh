@@ -55,33 +55,26 @@ then
 fi
 echo "Rars installed successfully."
 
-# cp rars to /opt/rars
-if [ -d /opt/rars ]
+# Install rars in /usr/local/bin path
+echo "Installing launch script in /usr/local/bin ..."
+
+if [ -f /usr/local/bin/rars ]
 then
-    sudo rm -rf /opt/rars
+    sudo rm /usr/local/bin/rars
     if [ $? -ne 0 ]
     then
-        echo "Failed to remove directory /opt/rars"
+        echo "Failed to remove old launch rars script."
         exit 1
     fi
-else
-    echo "Creating directory /opt/rars ..."
-    sudo mkdir /opt/rars
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to create directory /opt/rars"
-        exit 1
-    fi
-    echo "Directory /opt/rars created successfully."
 fi
 
-echo "Copying rars to /opt/rars ..."
-cp -r ./scripts/rars /opt/rars
+sudo cp ./scripts/rars /usr/local/bin/rars
 if [ $? -ne 0 ]
 then
-    echo "Failed to copy rars to /opt/rars"
+    echo "Failed to copy launch rars script."
     exit 1
 fi
-echo "Rars copied to /opt/rars successfully."
+
+echo "Launch rars script installed successfully."
 
 exit 0
