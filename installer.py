@@ -86,6 +86,15 @@ def main():
                 print("")
                 print("Finished installing netgui.")
                 print("")
+
+            elif option2 == 4:
+                print("")
+                print("Installing rars ... ")
+                print("")
+                script_exit = run_script("./scripts/install_rars.sh")
+                print("")
+                print("Finished installing rars.")
+                print("")
             
             if script_exit == 0:
                 print("")

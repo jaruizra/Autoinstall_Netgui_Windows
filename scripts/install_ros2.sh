@@ -10,6 +10,7 @@ then
         echo "Failed to install eif repo"
         exit 1
     fi
+    echo "Eif repo installed successfully."
 fi
 
 # Ubuntu Shell is none interactive
