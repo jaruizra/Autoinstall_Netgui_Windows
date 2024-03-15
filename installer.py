@@ -150,7 +150,15 @@ def main():
         print("")
         print(" --- The user force the program exit --- ")
         print(" --- Good bye :), see you next time --- ")
-        print("")     
+        print("")  
+
+    except PermissionError:
+        print("")
+        print("")
+        print(" --- The user does not have permission to run the selected script, number: " + str(option2) + " .")
+        print("Please do inside scripts folder -> chmod +x <script_name_selected> and try again.")
+        print(" --- Good bye :), see you next time --- ")
+        print("")   
 
 if __name__ == "__main__":
     main()

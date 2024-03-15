@@ -55,4 +55,33 @@ then
 fi
 echo "Rars installed successfully."
 
+# cp rars to /opt/rars
+if [ -d /opt/rars ]
+then
+    sudo rm -rf /opt/rars
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to remove directory /opt/rars"
+        exit 1
+    fi
+else
+    echo "Creating directory /opt/rars ..."
+    sudo mkdir /opt/rars
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to create directory /opt/rars"
+        exit 1
+    fi
+    echo "Directory /opt/rars created successfully."
+fi
+
+echo "Copying rars to /opt/rars ..."
+cp -r ./scripts/rars /opt/rars
+if [ $? -ne 0 ]
+then
+    echo "Failed to copy rars to /opt/rars"
+    exit 1
+fi
+echo "Rars copied to /opt/rars successfully."
+
 exit 0
