@@ -461,6 +461,6 @@ echo "You can follow all steps from https://github.com/IntelligentRoboticsLabs/k
 echo 
 
 # Try to launch gazebo kobuki simulation
-gnome-terminal -- bash -c 'source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; ros2 launch kobuki simulation.launch.py echo ; echo FINISHED, type enter to exit: ; read;'
+gnome-terminal -- bash -c 'source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; ros2 launch kobuki simulation.launch.py; echo ; echo FINISHED, type enter to exit: ; read;'
 
 exit 0
