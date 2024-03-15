@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Check if eif repo is already installed
+if [ -f ./scripts/eif_repo_install.sh ]
+then
+    echo "Attempting to install eif repo..."
+    ./scripts/eif_repo_install.sh
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to install eif repo"
+        exit 1
+    fi
+fi
+
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
@@ -11,6 +23,7 @@ then
 fi
 
 # Check for sudo privileges, dischard output
+echo
 sudo -n true > /dev/null 2>&1
 
 # Check if sudo privileges were granted
@@ -25,10 +38,16 @@ else
 fi
 
 # Update
+echo
+echo "Running apt update..."
 sudo apt update > /dev/null 2>&1
+echo "Apt update finished."
 
 # Packages to install
 packages="gnome-terminal konsole"
+
+echo
+echo "Installing dependencies ..."
 
 # Install packages
 for p in $packages
@@ -37,6 +56,7 @@ do
     then
         echo "Package $p already installed"
     else
+        echo "Installing package $p ... "
         sudo apt install -y $p > /dev/null 2>&1
 
         # Check if package was installed succesfully
@@ -45,12 +65,13 @@ do
             echo "Package $p failed to install"
             exit 1
         fi
+
+        echo "Package $p installed."
     fi
 done
 
-echo waiting user for command:
-read
-
+echo 
+echo "Checking locale settings ..."
 locale_var=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
 
 # Check if it is set to UTF-8
@@ -101,8 +122,10 @@ else
         exit 1
     fi
 fi
+echo "Locale is set to UTF-8."
 
 # Check for sudo privileges, dischard output
+echo
 sudo -n true > /dev/null 2>&1
 
 # Check if sudo privileges were granted
@@ -117,9 +140,14 @@ else
 fi
 
 # Update
+echo
+echo "Running apt update..."
 sudo apt update > /dev/null 2>&1
+echo "Apt update finished."
 
 # Add ros2 repository
+echo
+echo "Adding ROS 2 repository ..."
 sudo apt install -y software-properties-common > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
@@ -157,19 +185,27 @@ then
     exit 1
 fi
 
+echo "ROS 2 repository added."
+
 # Update apt repository
+echo
+echo "Running apt update..."
 sudo apt update > /dev/null 2>&1
+echo "Apt update finished."
 
 # Update Ubuntu packages for ROS 2 installation
+echo
+echo "Upgrading Ubuntu packages ..."
 sudo apt upgrade -y > /dev/null 2>&1
 if [ $? -ne 0 ]
 then
     echo "Failed to upgrade"
     exit 1
 fi
+echo "Ubuntu packages upgraded."
 
-echo "\n"
-echo "\n"
+echo 
+echo 
 echo "About to install ROS 2 Desktop... \n"
 
 # Install ROS 2 Desktop
@@ -182,31 +218,29 @@ then
 fi
 
 echo
-echo "Installation succesful. \n"
+echo "ROS2 Installation succesful. \n"
 
+# Check if its already sourced
+echo
+echo "Checking if ROS 2 is already sourced in bashrc ..."
 
-# Sourcing the setup script
-my_shell=$(echo $SHELL | awk -F'/' '{ print $NF }')
-
-# Shell is bash
-if [ "$my_shell" = "bash" ]
+grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
+if [ $? -eq 0 ]
 then
-
-    # Check if its already sourced
-    grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
-    if [ $? -eq 0 ]
+    echo "ROS 2 already sourced in bashrc."
+else
+    echo "" >> ~/.bashrc
+    echo "# ROS 2 underlay." >> ~/.bashrc
+    echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+    if [ $? -ne 0 ]
     then
-        echo "ROS 2 already sourced in bashrc"
-    else
-        echo "" >> ~/.bashrc
-        echo "# ROS 2 underlay." >> ~/.bashrc
-        echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-        if [ $? -ne 0 ]
-        then
-            echo "Failed to add source to bashrc"
-            exit 1
-        fi
+        echo "Failed to add source to bashrc."
+        exit 1
     fi
 fi
 
 source /opt/ros/humble/setup.bash
+
+echo
+echo -e "ROS 2 has finished installing, try to run \n \n \t source ~/.bashrc \n \n to source ROS 2 in your current shell. And check if when typing: \n \n \t ros2 \n \n you get a list of commands. \n"
+echo -e "\n If you have any issues, please refer to the ROS 2 documentation. Or try to run the script again. :) Bye. \n"
