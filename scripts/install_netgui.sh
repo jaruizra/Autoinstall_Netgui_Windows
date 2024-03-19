@@ -3,6 +3,33 @@
 # Ubuntu Shell is none interactive
 eval "$(cat ~/.bashrc | grep export)"
 
+# Check for sudo privileges, dischard output
+sudo -n true > /dev/null 2>&1
+
+# Check if sudo privileges were granted
+if [ $? -eq 0 ];
+then 
+    echo "You have sudo privileges"
+
+else
+    echo "You dont have sudo privileges"
+    # Update sudo timestamp
+    sudo -v
+fi
+
+# Check if 32 bit arquitecture is enabled in apt
+if ! dpkg --print-foreign-architectures | grep i386
+then
+    echo "Enabling 32 bit architecture..."
+    sudo dpkg --add-architecture i386
+    sudo apt update
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to enable 32 bit architecture"
+        exit 1
+    fi
+fi
+
 # Check if eif repo is already installed
 if [ -f ./scripts/eif_repo_install.sh ]
 then
@@ -27,20 +54,6 @@ if [ ! -f /etc/apt/sources.list.d/lablinuxrepo.list ]
 then
     echo "Eif repo is not installed. Needed for netgui installation."
     exit 0
-fi
-
-# Check for sudo privileges, dischard output
-sudo -n true > /dev/null 2>&1
-
-# Check if sudo privileges were granted
-if [ $? -eq 0 ];
-then 
-    echo "You have sudo privileges"
-
-else
-    echo "You dont have sudo privileges"
-    # Update sudo timestamp
-    sudo -v
 fi
 
 # Update
