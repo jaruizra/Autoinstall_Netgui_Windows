@@ -67,6 +67,7 @@ for p in $packages
 do
     if dpkg -l | grep -q "$p";
     then
+        echo
         echo "Package $p already installed"
     else
         echo
@@ -75,6 +76,7 @@ do
         # Check if package was installed succesfully
         if [ $? -ne 0 ];
         then
+            echo
             echo "Package $p failed to install."
             exit 1
         fi

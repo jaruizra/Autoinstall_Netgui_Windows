@@ -18,6 +18,7 @@ def get_option2(text):
             print("Invalid option, please enter a number between 1 and 5")
 
 def print_menu():
+    print("------------------------------------------------------------")
     print("1. Install ros2")
     print("2. Install kobuki")
     print("3. Install netgui")
@@ -96,8 +97,8 @@ def main():
                 print("Finished installing rars.")
                 print("")
             
-            print(script_exit)
-            
+            print(script_exit.returncode)
+
             if script_exit == 0:
                 print("")
                 print("Installation finished successfully.")
