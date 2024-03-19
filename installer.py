@@ -96,6 +96,8 @@ def main():
                 print("Finished installing rars.")
                 print("")
             
+            print(script_exit)
+            
             if script_exit == 0:
                 print("")
                 print("Installation finished successfully.")
