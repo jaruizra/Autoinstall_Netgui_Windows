@@ -10,7 +10,6 @@ def get_option2(text):
     # controlo la entrada
     while True:
         option = input(f"{text} (number): ")
-        o = input(str(text + " (number): "))
         try:
             option = int(option)
             if 1 <= option <= 5:

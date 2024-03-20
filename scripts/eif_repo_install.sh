@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash -i
 
 # Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | grep export)"
+#eval "$(cat ~/.bashrc | grep export)"
+source ~/.bashrc
 
 # Check number of arguments
 if [ $# -ne 0 ]

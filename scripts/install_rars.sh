@@ -1,4 +1,15 @@
-#!/bin/bash
+#!/bin/bash -i
+
+# Ubuntu Shell is none interactive
+#eval "$(cat ~/.bashrc | grep export)"
+source ~/.bashrc
+
+# Check number of arguments
+if [ $# -ne 0 ]
+then
+    echo "This script does not take any arguments."
+    exit 1
+fi
 
 # Check if eif repo is already installed
 if [ -f ./scripts/eif_repo_install.sh ]
@@ -11,16 +22,6 @@ then
         exit 1
     fi
     echo "Eif repo installed successfully."
-fi
-
-# Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | grep export)"
-
-# Check number of arguments
-if [ $# -ne 0 ]
-then
-    echo "This script does not take any arguments."
-    exit 1
 fi
 
 # Check for sudo privileges, dischard output
@@ -76,5 +77,7 @@ then
 fi
 
 echo "Launch rars script installed successfully."
+
+rars
 
 exit 0

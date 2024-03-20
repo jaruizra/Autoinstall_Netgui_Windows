@@ -1,9 +1,8 @@
-#!/bin/sh
+#!/bin/bash -i
 
-#!/bin/sh
-
-# Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | grep export)"
+# Ubuntu Shell is now interactive
+# eval "$(cat ~/.bashrc | grep export)"
+source ~/.bashrc
 
 # Check number of arguments
 if [ $# -ne 0 ]
@@ -16,7 +15,7 @@ fi
 sudo -n true > /dev/null 2>&1
 
 # Check if sudo privileges were granted
-if [ $? -eq 0 ];
+if [ $? -eq 0 ]
 then 
     echo "You have sudo privileges"
 
@@ -46,7 +45,17 @@ then
     export GALLIUM_DRIVER=llvmpipe
 fi
 
-
-echo "" >> ~/.bashrc
-echo "# cpu render" >> ~/.bashrc
-echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
+# Check if GALLIUM_DRIVER is set in .bashrc
+if cat ~/.bashrc | grep -q "export GALLIUM_DRIVER=llvmpipe"
+then
+    if ! cat ~/.bashrc | grep "export GALLIUM_DRIVER=llvmpipe" | grep -q "#"
+    then
+        echo "" >> ~/.bashrc
+        echo "# cpu render" >> ~/.bashrc
+        echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
+    fi
+else
+    echo "" >> ~/.bashrc
+    echo "# cpu render" >> ~/.bashrc
+    echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
+fi

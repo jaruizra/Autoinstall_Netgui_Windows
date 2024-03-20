@@ -1,4 +1,8 @@
-#!/bin/sh
+#!/bin/bash -i
+
+# Ubuntu Shell is none interactive
+#eval "$(cat ~/.bashrc | grep export)"
+source ~/.bashrc
 
 # Check number of arguments
 if [ $# -ne 0 ]
@@ -6,9 +10,6 @@ then
     echo "This script does not take any arguments."
     exit 1
 fi
-
-# Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | grep export)"
 
 # Check for sudo privileges, dischard output
 sudo -n true > /dev/null 2>&1
