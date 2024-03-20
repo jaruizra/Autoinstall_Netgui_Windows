@@ -7,15 +7,18 @@ def run_script(script_path):
     return result
 
 def get_option2(text):
-    exit = False
-    while not exit:
-        
+    # controlo la entrada
+    while True:
+        option = input(f"{text} (number): ")
         o = input(str(text + " (number): "))
-        if o.isdigit() and 1 <= int(o) <= 5:
-            exit = True
-            return int(o)
-        else:
-            print("Invalid option, please enter a number between 1 and 5")
+        try:
+            option = int(option)
+            if 1 <= option <= 5:
+                return option
+            else:
+                print("Invalid option, please enter a number between 1 and 5")
+        except ValueError:
+            print("Invalid input, please enter an integer")
 
 def print_menu():
     print("------------------------------------------------------------")
@@ -97,9 +100,7 @@ def main():
                 print("Finished installing rars.")
                 print("")
             
-            print(script_exit.returncode)
-
-            if script_exit == 0:
+            if script_exit.returncode == 0:
                 print("")
                 print("Installation finished successfully.")
             else:

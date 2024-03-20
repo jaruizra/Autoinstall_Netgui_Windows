@@ -24,6 +24,20 @@ else
     sudo -v
 fi
 
+# Check if mesa utils is installed
+if [ ! dpkg -l | grep mesa-utils]
+then
+    echo
+    echo "Mesa-utils not installed, installing to enable gpu acceleration ..."
+    sudo apt install -y mesa-utils > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to install mesa-utils, exiting."
+        exit 1
+    fi
+    echo "Mesa-utils installed successfully."
+fi
+
 # Check if 32 bit arquitecture is enabled in apt
 if ! dpkg --print-foreign-architectures | grep i386
 then
