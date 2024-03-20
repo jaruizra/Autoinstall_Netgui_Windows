@@ -25,7 +25,7 @@ else
 fi
 
 # Check if mesa utils is installed
-if [ ! dpkg -l | grep mesa-utils]
+if ! dpkg -l | grep -q mesa-utils
 then
     echo
     echo "Mesa-utils not installed, installing to enable gpu acceleration ..."
@@ -39,7 +39,7 @@ then
 fi
 
 # Check if 32 bit arquitecture is enabled in apt
-if ! dpkg --print-foreign-architectures | grep i386
+if ! dpkg --print-foreign-architectures | grep -q i386
 then
     echo
     echo "Enabling 32 bit architecture..."

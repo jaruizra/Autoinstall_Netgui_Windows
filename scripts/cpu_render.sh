@@ -27,7 +27,7 @@ else
 fi
 
 # Check if mesa utils is installed
-if [ ! dpkg -l | grep mesa-utils]
+if ! dpkg -l | grep -q mesa-utils
 then
     echo
     echo "Mesa-utils not installed, installing to enable gpu acceleration ..."
