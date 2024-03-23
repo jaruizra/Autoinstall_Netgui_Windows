@@ -39,6 +39,8 @@ then
     echo "Mesa-utils installed successfully."
 fi
 
+source ~/.bashrc
+
 # Check if eif repo is already installed
 if [ -f ./scripts/eif_repo_install.sh ]
 then
