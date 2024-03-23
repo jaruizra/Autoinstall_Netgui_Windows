@@ -75,12 +75,12 @@ done
 
 echo 
 echo "Checking locale settings ..."
-locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8"
+locale | grep LANG= | awk -F'=' '{ print $2 }' | grep -q "UTF-8"
 
 # Check if it is set to UTF-8
 if [ $? -eq 0 ]
 then
-    echo "Locale is set to UTF-8"
+    echo " "
 
 else
     sudo apt update && sudo apt install locales
