@@ -47,7 +47,7 @@ sudo apt update > /dev/null 2>&1
 echo "Apt update finished."
 
 # Packages to install
-packages="gnome-terminal konsole"
+packages="konsole gnome-terminal"
 
 echo
 echo "Installing dependencies ..."
@@ -60,7 +60,7 @@ do
         echo "Package $p already installed"
     else
         echo "Installing package $p ... "
-        sudo apt install -y $p > /dev/null 2>&1
+        sudo apt install -y $p
 
         # Check if package was installed succesfully
         if [ $? -ne 0 ];
