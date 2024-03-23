@@ -324,8 +324,8 @@ then
     rm /tmp/exitstatus
 fi
 
-gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
-
+#gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
+konsole -e /bin/bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 # Wait for a while for the process to potentially start
 sleep 20
 
@@ -386,8 +386,8 @@ fi
 echo 
 echo "Running again colcon build to check for errors..."
 # Run a command in a new terminal and write its exit status to a temp file
-gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
-
+# gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
+konsole -e /bin/bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 # Wait for a while for the process to potentially start
 sleep 20
 

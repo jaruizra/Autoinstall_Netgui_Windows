@@ -1,4 +1,16 @@
-#!/bin/bash
+#!/bin/bash -i
+
+
+# Ubuntu Shell is none interactive
+#eval "$(cat ~/.bashrc | grep export)"
+source ~/.bashrc
+
+# Check number of arguments
+if [ $# -ne 0 ]
+then
+    echo "This script does not take any arguments."
+    exit 1
+fi
 
 # Check if eif repo is already installed
 if [ -f ./scripts/eif_repo_install.sh ]
@@ -11,16 +23,6 @@ then
         exit 1
     fi
     echo "Eif repo installed successfully."
-fi
-
-# Ubuntu Shell is none interactive
-eval "$(cat ~/.bashrc | grep export)"
-
-# Check number of arguments
-if [ $# -ne 0 ]
-then
-    echo "This script does not take any arguments."
-    exit 1
 fi
 
 # Check for sudo privileges, dischard output
@@ -73,7 +75,7 @@ done
 
 echo 
 echo "Checking locale settings ..."
-locale_var=$(locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8")
+locale | grep LANG= | awk -F'=' '{ print $2 }' | grep "UTF-8"
 
 # Check if it is set to UTF-8
 if [ $? -eq 0 ]

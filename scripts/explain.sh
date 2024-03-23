@@ -1,7 +1,8 @@
 #!/bin/bash -i
 
 # Ubuntu Shell is none interactive
-echo
-#echo $-
-patata=55
-echo $patata
+echo "hola"
+
+konsole -e /bin/bash -i -c 'echo ldjfkljdf; read' > /dev/null 2>&1
+
+echo "adios"
