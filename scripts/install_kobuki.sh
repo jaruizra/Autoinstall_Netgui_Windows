@@ -25,20 +25,13 @@ else
     sudo -v
 fi
 
-# Check if mesa utils is installed
-if ! dpkg -l | grep -q mesa-utils
+# Enable cpu rendering for compatibility with gazebo
+./scripts/cpu_render.sh
+if [ $? -ne 0 ]
 then
-    echo
-    echo "Mesa-utils not installed, installing to enable gpu acceleration ..."
-    sudo apt install -y mesa-utils > /dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to install mesa-utils, exiting."
-        exit 1
-    fi
-    echo "Mesa-utils installed successfully."
+    echo "Failed to enable cpu rendering."
+    exit 1
 fi
-
 source ~/.bashrc
 
 # Check if eif repo is already installed
