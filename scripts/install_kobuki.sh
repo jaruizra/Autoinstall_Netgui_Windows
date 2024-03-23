@@ -273,6 +273,7 @@ then
     sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
     if [ $? -ne 0 ]
     then
+        echo
         echo "Failed to remove /etc/ros/rosdep/sources.list.d/20-default.list"
         echo "Aborting building proyect."
         exit 1
@@ -283,6 +284,7 @@ echo "sudo rosdep init"
 sudo rosdep init
 if [ $? -ne 0 ]
 then
+    echo
     echo "sudo rosdep init failed. Aborting building proyect."
     exit 1
 fi
@@ -292,6 +294,7 @@ echo "rosdep update"
 rosdep update
 if [ $? -ne 0 ]
 then
+    echo
     echo "sudo rosdep update failed. Aborting building proyect."
     rosdep update
 fi
@@ -302,6 +305,7 @@ cd ~/ros2_ws
 rosdep install --from-paths src --ignore-src -r -y
 if [ $? -ne 0 ]
 then
+    echo
     echo "rosdep install --from-paths src --ignore-src -r - failed. Aborting building proyect."
     exit 1
 fi
@@ -311,136 +315,78 @@ echo
 echo "About to start colcol build ... "
 echo "Going to take some time, be patient. Grab a coffe."
 
-echo 
-echo "Running again colcon build to check for errors..."
-# Run a command in a new terminal and write its exit status to a temp file
-if [ -f /tmp/pid ]
+# Check if file /tmp/exit exist from previous failed runs
+if [ -f /tmp/exit ]
 then
-    rm /tmp/pid
+    rm /tmp/exit
 fi
 
-if [ -f /tmp/exitstatus ]
-then
-    rm /tmp/exitstatus
-fi
+konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install; echo $? > /tmp/exit; echo ; echo FINISHED, type enter to exit: ; read;'
 
-#gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
-konsole -e /bin/bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2;cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
 # Wait for a while for the process to potentially start
 sleep 20
-
-# Get the PID of the process
-if [ -f /tmp/pid ]
-then
-    pid=$(cat /tmp/pid)
-else
-    echo
-    echo "Failed to get PID of the colcon build process."
-    echo "Exiting"
-    exit 1
-fi
 
 # Check if the process is still running
 start_time=$(date +%s)
 while true
 do
-    if [ ! -f /tmp/exitstatus ]
-    then
-        if [ $(($(date +%s) - $start_time)) -gt 1800 ]
-        then
-            echo
-            echo "The process has taken too long to finish. More than 30 minutes. Exiting ..."
-            kill -9 $pid
-            exit 1
-            
-        elif ! ps -p $pid > /dev/null
-        then
-            echo
-            echo "The colcon build process seems to have died. Unable to build kobuki. Exiting ..."
-            echo "Try to manually run colcon build --symlink-install --parallel-workers 1 in a terminal inside ~/ros2_ws to check for errors."
-            exit 1
-        else
-            echo "colcon build is still running..."
-            sleep 15
-        fi
-        
-    else
-        echo
-        echo "Colcon build has finished."
-        sleep 2
-        # kill -9 $pid
-        break
-    fi
-done
-
-if [ -f /tmp/pid ]
-then
-    rm /tmp/pid
-fi
-
-if [ -f /tmp/exitstatus ]
-then
-    rm /tmp/exitstatus
-fi
-
-echo 
-echo "Running again colcon build to check for errors..."
-# Run a command in a new terminal and write its exit status to a temp file
-# gnome-terminal -- bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
-konsole -e /bin/bash -i -c 'ros2; source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; echo $$ > /tmp/pid; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exitstatus; echo ; echo FINISHED, type enter to exit: ; read;'
-# Wait for a while for the process to potentially start
-sleep 20
-
-# Get the PID of the process
-if [ -f /tmp/pid ]
-then
-    pid=$(cat /tmp/pid)
-else
-    echo
-    echo "Failed to get PID of the colcon build process."
-    echo "Exiting"
-    exit 1
-fi
-
-# Check if the process is still running
-start_time=$(date +%s)
-while true
-do
-    if [ ! -f /tmp/exitstatus ]
+    if [ ! -f /tmp/exit ]
     then
         if [ $(($(date +%s) - $start_time)) -gt 1200 ]
         then
             echo
             echo "The process has taken too long to finish. More than 20 minutes. Exiting ..."
-            kill -9 $pid
-            exit 1
-            
-        elif ! ps -p $pid > /dev/null
-        then
-            echo
-            echo "The colcon build process seems to have died. Unable to build kobuki. Exiting ..."
-            echo "Try to manually run colcon build --symlink-install --parallel-workers 1 in a terminal inside ~/ros2_ws to check for errors."
             exit 1
         else
             echo "colcon build is still running..."
-            sleep 10
+            sleep 5
         fi
         
     else
         echo
         echo "Colcon build has finished."
-        sleep 2
-        # kill -9 $pid
         break
     fi
 done
 
-if [ -f /tmp/pid ]
+if [ -f /tmp/exit ]
 then
-    rm /tmp/pid
+    rm /tmp/exit
 fi
 
-exitstatus=$(cat /tmp/exitstatus)
+echo 
+echo "Running again colcon build to check for errors..."
+echo "Going to take some time, be patient. Grab a coffe."
+# Run a command in a new terminal and write its exit status to a temp file
+konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exit; echo ; echo FINISHED, type enter to exit: ; read;'
+
+# Wait for a while for the process to potentially start
+sleep 20
+
+# Check if the process is still running
+start_time=$(date +%s)
+while true
+do
+    if [ ! -f /tmp/exit ]
+    then
+        if [ $(($(date +%s) - $start_time)) -gt 1200 ]
+        then
+            echo
+            echo "The process has taken too long to finish. More than 20 minutes. Exiting ..."
+            exit 1
+        else
+            echo "colcon build is still running..."
+            sleep 5
+        fi
+        
+    else
+        echo
+        echo "Colcon build has finished."
+        break
+    fi
+done
+
+exitstatus=$(cat /tmp/exit)
 
 if [ $exitstatus -ne 0 ]
 then
@@ -449,9 +395,9 @@ then
     exit 1
 fi
 
-if [ -f /tmp/exitstatus ]
+if [ -f /tmp/exit ]
 then
-    rm /tmp/exitstatus
+    rm /tmp/exit
 fi
 
 echo
@@ -460,23 +406,34 @@ echo "colcon build finished successfully."
 # Setup Gazebo to find models - GAZEBO_MODEL_PATH and project path
 echo
 echo "Setup Gazebo to find models - GAZEBO_MODEL_PATH and project path"
+
 # Testing if GAZEBO_MODEL_PATH is set
-. /usr/share/gazebo/setup.bash
+source /usr/share/gazebo/setup.bash
 if [ $? -ne 0 ]
 then
+    echo
     echo "Failed to source /usr/share/gazebo/setup.bash"
     echo "Colcon build finished un-successfully as above error suggests."
     exit 1
 fi
 
-echo "Adding to ~/.bashrc"
-echo >> ~/.bashrc
-echo "# gazebo model path" >> ~/.bashrc
-echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
-echo >> ~/.bashrc
+# Check if gazebo underlay is already sourced in bashrc
+if cat ~/.bashrc | grep -q "source /usr/share/gazebo/setup.bash"
+then
+    if ! cat ~/.bashrc | grep "source /usr/share/gazebo/setup.bash" | grep -q "#"
+    then
+        echo "" >> ~/.bashrc
+        echo "# gazebo model path" >> ~/.bashrc
+        echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
+    fi
+else
+    echo "" >> ~/.bashrc
+    echo "# gazebo model path" >> ~/.bashrc
+    echo "source /usr/share/gazebo/setup.bash" >> ~/.bashrc
+fi
 
 # Testing if ros2_ws project path is set
-. ~/ros2_ws/install/setup.bash
+source ~/ros2_ws/install/setup.bash
 if [ $? -ne 0 ]
 then
     echo "Failed to source ~/ros2_ws/install/setup.bash"
@@ -484,9 +441,20 @@ then
     exit 1
 fi
 
-echo >> ~/.bashrc
-echo "# seting up ros2_ws project path" >> ~/.bashrc
-echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+# Check if gazebo underlay is already sourced in bashrc
+if cat ~/.bashrc | grep -q "source ~/ros2_ws/install/setup.bash"
+then
+    if ! cat ~/.bashrc | grep "source ~/ros2_ws/install/setup.bash" | grep -q "#"
+    then
+        echo "" >> ~/.bashrc
+        echo "# seting up ros2_ws project path" >> ~/.bashrc
+        echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+    fi
+else
+    echo "" >> ~/.bashrc
+    echo "# seting up ros2_ws project path" >> ~/.bashrc
+    echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
+fi
 
 echo 
 echo "Trying to launch gazebo kobuki simulation in a new terminal ..."
@@ -496,6 +464,6 @@ echo "You can follow all steps from https://github.com/IntelligentRoboticsLabs/k
 echo 
 
 # Try to launch gazebo kobuki simulation
-gnome-terminal -- bash -c 'source /opt/ros/humble/setup.bash; ros2; cd ~/ros2_ws; ros2 launch kobuki simulation.launch.py;'
+konsole -e /bin/bash -i -c 'source ~/.bashrc; cd ~/ros2_ws; ros2 launch kobuki simulation.launch.py'
 
 exit 0

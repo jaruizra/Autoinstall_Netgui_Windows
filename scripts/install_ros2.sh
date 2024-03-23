@@ -227,19 +227,19 @@ echo "ROS2 Installation succesful. \n"
 echo
 echo "Checking if ROS 2 is already sourced in bashrc ..."
 
-grep -q "/opt/ros/humble/setup.bash" ~/.bashrc
-if [ $? -eq 0 ]
+# Check if ROS 2 is already sourced in bashrc
+if cat ~/.bashrc | grep -q "source /opt/ros/humble/setup.bash"
 then
-    echo "ROS 2 already sourced in bashrc."
+    if ! cat ~/.bashrc | grep "source /opt/ros/humble/setup.bash" | grep -q "#"
+    then
+        echo "" >> ~/.bashrc
+        echo "# ROS 2 underlay." >> ~/.bashrc
+        echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
+    fi
 else
     echo "" >> ~/.bashrc
     echo "# ROS 2 underlay." >> ~/.bashrc
     echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-    if [ $? -ne 0 ]
-    then
-        echo "Failed to add source to bashrc."
-        exit 1
-    fi
 fi
 
 source /opt/ros/humble/setup.bash
