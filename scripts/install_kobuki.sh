@@ -316,10 +316,10 @@ then
     rm /tmp/exit
 fi
 
-konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install; echo $? > /tmp/exit; echo ; echo FINISHED, type enter to exit: ; read;'
+konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install; echo $? > /tmp/exit; echo ; echo FINISHED' > /dev/null 2>&1
 
 # Wait for a while for the process to potentially start
-sleep 20
+sleep 5
 
 # Check if the process is still running
 start_time=$(date +%s)
@@ -353,10 +353,10 @@ echo
 echo "Running again colcon build to check for errors..."
 echo "Going to take some time, be patient. Grab a coffe."
 # Run a command in a new terminal and write its exit status to a temp file
-konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exit; echo ; echo FINISHED, type enter to exit: ; read;'
+konsole -e /bin/bash -i -c 'source /opt/ros/humble/setup.bash; source ~/.bashrc; cd ~/ros2_ws; colcon build --symlink-install --parallel-workers 1; echo $? > /tmp/exit; echo ; echo FINISHED' > /dev/null 2>&1
 
 # Wait for a while for the process to potentially start
-sleep 20
+sleep 5
 
 # Check if the process is still running
 start_time=$(date +%s)
