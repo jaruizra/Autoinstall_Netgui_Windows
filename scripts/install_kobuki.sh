@@ -1,7 +1,16 @@
 #!/bin/bash -i
 
+# Function to handle errors and exit
+handle_error() {
+    local status=$1
+    local message=$2
+    if [ $status -ne 0 ]; then
+        echo "$message"
+        exit 1
+    fi
+}
+
 # Ubuntu Shell is none interactive
-#eval "$(cat ~/.bashrc | grep export)"
 source ~/.bashrc
 
 # Check number of arguments
@@ -11,6 +20,50 @@ then
     exit 1
 fi
 
+
+
+# Check user pc specs
+# Check ram
+
+# Check SWAP = minimum ram + swap = X GB
+
+
+
+# Instalar konsole
+# Packages to install
+packages="gnome-terminal"
+
+echo
+echo "Installing dependencies ..."
+
+# Install packages
+for p in $packages
+do
+    if dpkg -l | grep -q "$p";
+    then
+        echo "Package $p already installed"
+    else
+        echo "Installing package $p ... "
+        sudo apt install -y $p
+
+        # Check if package was installed succesfully
+        handle_error $? "Package $p failed to install"
+        if [ $? -ne 0 ];
+        then
+            echo "Package $p failed to install"
+            exit 1
+        fi
+
+        echo "Package $p installed."
+    fi
+done
+
+
+
+
+
+
+
 # Check for sudo privileges, dischard output
 sudo -n true > /dev/null 2>&1
 
@@ -18,7 +71,6 @@ sudo -n true > /dev/null 2>&1
 if [ $? -eq 0 ];
 then 
     echo "You have sudo privileges"
-
 else
     echo "You dont have sudo privileges"
     # Update sudo timestamp
@@ -26,13 +78,79 @@ else
 fi
 
 # Enable cpu rendering for compatibility with gazebo
-./scripts/cpu_render.sh
-if [ $? -ne 0 ]
+if ( unname -a | grep WSL );
 then
-    echo "Failed to enable cpu rendering."
-    exit 1
+    echo "WSL2 detected, applying custom renderer for compatibility with gazebo"
+    echo "to do later"
+
+else
+    # Using normal installation of Ubuntu
+    echo ""
+
+    # Check if NVIDIA GPU is present
+    if ( ! lspci | grep -iq nvidia );
+    then
+        echo "Your laptop doesnt seem to have an nvidia gpu."
+        echo "Enabling cpu rendering."
+        ./scripts/WSL2_scripts/cpu_render.sh
+        if [ $? -ne 0 ]
+        then
+            echo "Failed to enable cpu rendering."
+            exit 1
+        fi
+        # getting new enviroment variables
+        source ~/.bashrc
+
+    else
+        echo "Nvidia gpu detected. Checking if drivers are installed."
+        
+        nvidia-smi > /dev/null
+        # Nvidia gpu is not detected
+        if [ $? -ne 0 ]
+        then
+            echo "Nvidia gpu drivers are not installed."
+            echo "Triying to install gpu drivers..."
+
+            # Check for sudo privileges, dischard output
+            sudo -n true > /dev/null 2>&1
+
+            # Check for sudo privileges
+            if sudo -n true > /dev/null 2>&1; then
+                echo "You have sudo privileges."
+            else
+                echo "You don't have sudo privileges. Requesting privileges..."
+                sudo -v
+            fi
+
+            # Install NVIDIA drivers
+            sudo ubuntu-drivers install
+            handle_error $? "Failed to automatically install NVIDIA drivers. Please install them manually and re-run this script."
+
+
+            echo "Nvidia drivers succesfully installed."
+
+            # reload enviroment variables
+            source ~/.bashrc
+
+            # Verify NVIDIA driver installation
+            nvidia-smi > /dev/null 2>&1
+            # check if nvidia gpu is activated
+            if [ $? -ne 0 ]
+            then
+                echo ""
+                echo "Nvidia gpu drivers are not installed, even though installation seemed okay."
+                echo "Please try manually to install nvidia drivers"
+                exit 1
+            else
+                echo ""
+                echo "nvidia drivers were installed succesfully, ready to continue."
+            fi
+        else
+            echo "The nvidia drivers are also installed, ready to continue."  
+        fi                                          
+    fi
 fi
-source ~/.bashrc
+
 
 # Check if eif repo is already installed
 if [ -f ./scripts/eif_repo_install.sh ]

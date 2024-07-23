@@ -2,7 +2,6 @@
 
 
 # Ubuntu Shell is none interactive
-#eval "$(cat ~/.bashrc | grep export)"
 source ~/.bashrc
 
 # Check number of arguments
@@ -45,33 +44,6 @@ echo
 echo "Running apt update..."
 sudo apt update > /dev/null 2>&1
 echo "Apt update finished."
-
-# Packages to install
-packages="konsole gnome-terminal"
-
-echo
-echo "Installing dependencies ..."
-
-# Install packages
-for p in $packages
-do
-    if dpkg -l | grep -q "$p";
-    then
-        echo "Package $p already installed"
-    else
-        echo "Installing package $p ... "
-        sudo apt install -y $p
-
-        # Check if package was installed succesfully
-        if [ $? -ne 0 ];
-        then
-            echo "Package $p failed to install"
-            exit 1
-        fi
-
-        echo "Package $p installed."
-    fi
-done
 
 echo 
 echo "Checking locale settings ..."

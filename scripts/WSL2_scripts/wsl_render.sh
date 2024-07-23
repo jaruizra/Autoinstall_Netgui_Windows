@@ -1,5 +1,20 @@
 #!/bin/bash -i
 
+
+
+./scripts/WSL2_scripts/wsl_render.sh
+    if [ $? -ne 0 ]
+    then
+        echo "Failed to enable cpu rendering."
+        exit 1
+    fi
+    # get new envoroment variables
+    source ~/.bashrc
+
+
+
+
+
 # Ubuntu Shell is now interactive
 # eval "$(cat ~/.bashrc | grep export)"
 source ~/.bashrc
@@ -39,23 +54,22 @@ then
     echo "Mesa-utils installed successfully."
 fi
 
-# script to enable cpu graphics rendering
-if [ "$GALLIUM_DRIVER" != "llvmpipe" ]
-then
-    export GALLIUM_DRIVER=llvmpipe
-fi
-
 # Check if GALLIUM_DRIVER is set in .bashrc
-if cat ~/.bashrc | grep -q "export GALLIUM_DRIVER=llvmpipe"
+BASHRC="$HOME/.bashrc"
+DRIVER_SETTING="export GALLIUM_DRIVER=llvmpipe"
+
+if grep -q "^# $DRIVER_SETTING" "$BASHRC";
 then
-    if ! cat ~/.bashrc | grep "export GALLIUM_DRIVER=llvmpipe" | grep -q "#"
-    then
-        echo "" >> ~/.bashrc
-        echo "# cpu render" >> ~/.bashrc
-        echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
-    fi
+    # Descomenta el setting si acaso existe
+    sed -i "/^# $DRIVER_SETTING/s/^# //" "$BASHRC"
+    #echo "" >> ~/.bashrc
+    #echo "# cpu render" >> ~/.bashrc
+    #echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
 else
-    echo "" >> ~/.bashrc
-    echo "# cpu render" >> ~/.bashrc
-    echo "export GALLIUM_DRIVER=llvmpipe" >> ~/.bashrc
+    # Lo añade al script si no lo encuentra
+    {
+        echo ""
+        echo "# CPU RENDERER"
+        echo "$DRIVER_SETTING"
+    } >> "$BASHRC"
 fi
